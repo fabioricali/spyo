@@ -18,6 +18,10 @@ describe('Spyo', function () {
             firstName: 'Mike',
             lastName: 'Red'
         };
+
         const mySpy = new Spyo(myObject);
+
+        myObject.firstName = 'John';
+        console.log(myObject);
     });
 });

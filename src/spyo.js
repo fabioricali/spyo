@@ -5,18 +5,31 @@ class Spyo {
 
     constructor(obj, opts = {}) {
 
-        if (!Spyo.isObject(obj))
-            throw new TypeError('An object is required');
+        if (!Spyo.isIterable(obj))
+            throw new TypeError('An object or an array is required');
 
         this.opts = extend.copy(opts, {
             autoCheck: true,
             checkMs: 50
         });
 
-        this.objCopy = clone(obj);
         this.obj = obj;
+        this.objCopy = clone(this.obj);
+    }
 
-        Spyo.isEqual(this.obj, this.objCopy);
+    /**
+     * Check if object is changed
+     * @returns {boolean}
+     */
+    changed() {
+        return Spyo.isEqual(this.obj, this.objCopy);
+    }
+
+    /**
+     * Sync object in memory
+     */
+    sync() {
+        this.objCopy = clone(this.obj);
     }
 
     /**
@@ -44,7 +57,7 @@ class Spyo {
     }
 
     /**
-     *
+     * Check if is an array or an object
      * @param obj
      * @returns {boolean}
      */
