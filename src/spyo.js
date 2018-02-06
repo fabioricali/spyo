@@ -16,7 +16,7 @@ class Spyo {
         this.objCopy = clone(obj);
         this.obj = obj;
 
-        Spyo.equal(this.obj, this.objCopy);
+        Spyo.isEqual(this.obj, this.objCopy);
     }
 
     /**
@@ -25,18 +25,31 @@ class Spyo {
      * @param b {object}
      * @returns {boolean}
      */
-    static equal(a, b) {
-        if (Object.keys(a).length !== Object.keys(b).length)
-            return false;
-        for (let prop in a) {
-            if (a.hasOwnProperty(prop) && b.hasOwnProperty(prop)) {
-                if (!Spyo.equal(a[prop], b[prop]))
-                    return false;
-            } else
+    static isEqual(a, b) {
+        if (Spyo.isIterable(a) && Spyo.isIterable(b)) {
+            if (Object.keys(a).length !== Object.keys(b).length)
                 return false;
-        }
+            for (let prop in a) {
+                if (a.hasOwnProperty(prop) && b.hasOwnProperty(prop)) {
+                    if (!Spyo.isEqual(a[prop], b[prop]))
+                        return false;
+                } else
+                    return false;
+            }
 
-        return true;
+            return true;
+        } else {
+            return Object.is(a, b);
+        }
+    }
+
+    /**
+     *
+     * @param obj
+     * @returns {boolean}
+     */
+    static isIterable(obj) {
+        return Spyo.isObject(obj) || Spyo.isArray(obj);
     }
 
     /**
@@ -46,6 +59,15 @@ class Spyo {
      */
     static isObject(obj) {
         return Object.prototype.toString.call(obj) === '[object Object]';
+    }
+
+    /**
+     * Check for array
+     * @param obj {*}
+     * @returns {boolean}
+     */
+    static isArray(obj) {
+        return Array.isArray(obj);
     }
 }
 
