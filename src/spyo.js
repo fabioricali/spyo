@@ -1,35 +1,115 @@
 const extend = require('defaulty');
 const clone = require('clone');
 
+/**
+ * @class
+ */
 class Spyo {
 
+    /**
+     * Create instance
+     * @param obj {Object} object that you want watch
+     * @param [opts] {Object} configuration object
+     * @param [opts.autoWatch=true] {boolean} auto watch
+     * @param [opts.checkMs=50] {number} interval in milliseconds for every check
+     * @param [opts.refreshFrom=null] {Object} refresh data source every check
+     */
     constructor(obj, opts = {}) {
 
         if (!Spyo.isIterable(obj))
             throw new TypeError('An object or an array is required');
 
         this.opts = extend.copy(opts, {
-            autoCheck: true,
-            checkMs: 50
+            autoWatch: true,
+            checkMs: 50,
+            refreshFrom: null
         });
 
         this.obj = obj;
         this.objCopy = clone(this.obj);
+
+        this._onChange = () => {
+        };
+
+        this._intervalObject = null;
+
+        this._lastState = null;
+
+        if (this.opts.autoWatch)
+            this.watch();
     }
 
     /**
-     * Check if object is changed
+     * Refresh data source object
+     * @param obj
+     */
+    refresh(obj) {
+        if (!Spyo.isIterable(obj))
+            throw new TypeError('An object or an array is required');
+        this.obj = obj;
+    }
+
+    /**
+     * Check if it's different
+     * @returns {Spyo}
+     */
+    check() {
+        if (this.opts.refreshFrom)
+            this.refresh(this.opts.refreshFrom);
+        let state = this.isDifferent();
+        if (state !== this._lastState) {
+            this._lastState = state;
+            this._onChange.call(this, state, this);
+        }
+        return this;
+    }
+
+    /**
+     * Start watching
+     * @returns {Spyo}
+     */
+    watch() {
+        this._intervalObject = setInterval(() => {
+            this.check();
+        }, this.opts.checkMs);
+        return this;
+    }
+
+    /**
+     * Stop watching
+     * @returns {Spyo}
+     */
+    unwatch() {
+        clearInterval(this._intervalObject);
+        this._intervalObject = null;
+        return this;
+    }
+
+    /**
+     * Fired when object is isDifferent
+     * @param callback
+     * @returns {Spyo}
+     */
+    onChange(callback) {
+        this._onChange = callback;
+        return this;
+    }
+
+    /**
+     * Check if object is isDifferent
      * @returns {boolean}
      */
-    changed() {
-        return Spyo.isEqual(this.obj, this.objCopy);
+    isDifferent() {
+        return !Spyo.isEqual(this.obj, this.objCopy);
     }
 
     /**
      * Sync object in memory
+     * @returns {Spyo}
      */
     sync() {
         this.objCopy = clone(this.obj);
+        return this;
     }
 
     /**
