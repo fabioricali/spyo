@@ -244,13 +244,13 @@ var Spyo = function () {
         }
 
         /**
-         * Check if object is isChanged
+         * Check if object is changed
          * @returns {boolean}
          */
 
     }, {
         key: 'isChanged',
-        value: function isDifferent() {
+        value: function isChanged() {
             return !Spyo.isEqual(this.obj, this.objCopy, this.opts.exclude);
         }
 
@@ -293,7 +293,7 @@ var Spyo = function () {
         }
 
         /**
-         * Check if is an array or an object
+         * Check if is an array or an plain object
          * @param obj
          * @returns {boolean}
          */
