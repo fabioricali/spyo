@@ -35,8 +35,8 @@ const mySpy = new Spyo(myObject);
 
 myObject.firstName = 'John';
 
-mySpy.onChange((different, me) => {
-    console.log('is different:', different);;
+mySpy.onChange((different) => {
+    console.log('is different:', different);
 });
 ```
 

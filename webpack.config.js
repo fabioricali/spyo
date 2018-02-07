@@ -7,7 +7,7 @@ module.exports = {
     entry: './index.js',
     output: {
         filename: './dist/spyo.min.js',
-        library: 'spyo',
+        library: 'Spyo',
         umdNamedDefine: true,
         libraryTarget: 'umd'
     },
