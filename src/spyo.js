@@ -22,7 +22,8 @@ class Spyo {
         this.opts = extend.copy(opts, {
             autoWatch: true,
             checkMs: 50,
-            refreshFrom: null
+            refreshFrom: null,
+            exclude: null
         });
 
         this.obj = obj;
@@ -100,7 +101,11 @@ class Spyo {
      * @returns {boolean}
      */
     isDifferent() {
-        return !Spyo.isEqual(this.obj, this.objCopy);
+        return !Spyo.isEqual(
+            this.obj,
+            this.objCopy,
+            this.opts.exclude
+        );
     }
 
     /**
@@ -116,15 +121,16 @@ class Spyo {
      * Check if two object are equals (deep check)
      * @param a {object}
      * @param b {object}
+     * @param exclude {Array} exclude properties from check
      * @returns {boolean}
      */
-    static isEqual(a, b) {
+    static isEqual(a, b, exclude = []) {
         if (Spyo.isIterable(a) && Spyo.isIterable(b)) {
             if (Object.keys(a).length !== Object.keys(b).length)
                 return false;
             for (let prop in a) {
-                if (a.hasOwnProperty(prop) && b.hasOwnProperty(prop)) {
-                    if (!Spyo.isEqual(a[prop], b[prop]))
+                if (a.hasOwnProperty(prop) && b.hasOwnProperty(prop) && exclude.indexOf(prop) === -1) {
+                    if (!Spyo.isEqual(a[prop], b[prop], exclude))
                         return false;
                 } else
                     return false;
