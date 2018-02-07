@@ -51,7 +51,6 @@ class Spyo {
     refresh(obj) {
         if (!Spyo.isIterable(obj))
             throw new TypeError('An object or an array is required');
-        console.log(obj);
         this.obj = obj;
     }
 
