@@ -55,7 +55,7 @@ mySpy.onChange((different) => {
         * [.unwatch()](#Spyo+unwatch) ⇒ [<code>Spyo</code>](#Spyo)
         * [.onChange(callback)](#Spyo+onChange) ⇒ [<code>Spyo</code>](#Spyo)
         * [.isChanged()](#Spyo+isChanged) ⇒ <code>boolean</code>
-        * [.reset()](#Spyo+sync) ⇒ [<code>Spyo</code>](#Spyo)
+        * [.reset()](#Spyo+reset) ⇒ [<code>Spyo</code>](#Spyo)
     * _static_
         * [.isEqual(a, b, exclude)](#Spyo.isEqual) ⇒ <code>boolean</code>
         * [.isIterable(obj)](#Spyo.isIterable) ⇒ <code>boolean</code>
@@ -87,10 +87,13 @@ Create instance
     <td>[opts.checkMs]</td><td><code>number</code></td><td><code>50</code></td><td><p>interval in milliseconds for every check</p>
 </td>
     </tr><tr>
-    <td>[opts.refreshFrom]</td><td><code>Object</code></td><td><code></code></td><td><p>refresh data source every check</p>
+    <td>[opts.refreshHandler]</td><td><code>function</code></td><td><code></code></td><td><p>refresh data source every check</p>
 </td>
     </tr><tr>
     <td>[opts.exclude]</td><td><code>String</code> | <code>Array</code></td><td><code></code></td><td><p>exclude a property or more from check</p>
+</td>
+    </tr><tr>
+    <td>[opts.autoReset]</td><td><code>boolean</code></td><td><code>false</code></td><td><p>reset changes detected after check</p>
 </td>
     </tr>  </tbody>
 </table>
@@ -158,7 +161,7 @@ Check if object is changed
 <a name="Spyo+reset"></a>
 
 ### spyo.reset() ⇒ [<code>Spyo</code>](#Spyo)
-Sync object in memory
+Reset changes detected
 
 **Kind**: instance method of [<code>Spyo</code>](#Spyo)  
 <a name="Spyo.isEqual"></a>
@@ -175,9 +178,11 @@ Check if two object are equals (deep check)
   </thead>
   <tbody>
 <tr>
-    <td>a</td><td><code>object</code></td><td></td>
+    <td>a</td><td><code>object</code></td><td><p>first object</p>
+</td>
     </tr><tr>
-    <td>b</td><td><code>object</code></td><td></td>
+    <td>b</td><td><code>object</code></td><td><p>second object</p>
+</td>
     </tr><tr>
     <td>exclude</td><td><code>Array</code></td><td><p>exclude properties from check</p>
 </td>
