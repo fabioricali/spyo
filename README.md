@@ -2,6 +2,7 @@
 Observe an object, check when it's change.
 
 <a href="https://travis-ci.org/fabioricali/spyo" target="_blank"><img src="https://travis-ci.org/fabioricali/spyo.svg?branch=master" title="Build Status"/></a>
+<a href="https://coveralls.io/github/fabioricali/spyo?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/fabioricali/spyo/badge.svg?branch=master&2" title="Coverage Status"/></a>
 <a href="https://opensource.org/licenses/MIT" target="_blank"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" title="License: MIT"/></a>
 
 ## Installation
@@ -34,10 +35,12 @@ const mySpy = new Spyo(myObject);
 
 myObject.firstName = 'John';
 
-mySpy.onChange((different, me) => {
-    console.log('is different:', different);;
+mySpy.onChange((different) => {
+    console.log('is different:', different);
 });
 ```
+
+## API
 
 <a name="Spyo"></a>
 
@@ -52,7 +55,7 @@ mySpy.onChange((different, me) => {
         * [.watch()](#Spyo+watch) ⇒ [<code>Spyo</code>](#Spyo)
         * [.unwatch()](#Spyo+unwatch) ⇒ [<code>Spyo</code>](#Spyo)
         * [.onChange(callback)](#Spyo+onChange) ⇒ [<code>Spyo</code>](#Spyo)
-        * [.isDifferent()](#Spyo+isDifferent) ⇒ <code>boolean</code>
+        * [.isChanged()](#Spyo+isChanged) ⇒ <code>boolean</code>
         * [.sync()](#Spyo+sync) ⇒ [<code>Spyo</code>](#Spyo)
     * _static_
         * [.isEqual(a, b, exclude)](#Spyo.isEqual) ⇒ <code>boolean</code>
@@ -132,7 +135,7 @@ Stop watching
 <a name="Spyo+onChange"></a>
 
 ### spyo.onChange(callback) ⇒ [<code>Spyo</code>](#Spyo)
-Fired when object is isDifferent
+Fired when object is isChanged
 
 **Kind**: instance method of [<code>Spyo</code>](#Spyo)  
 <table>
@@ -147,10 +150,10 @@ Fired when object is isDifferent
     </tr>  </tbody>
 </table>
 
-<a name="Spyo+isDifferent"></a>
+<a name="Spyo+isChanged"></a>
 
-### spyo.isDifferent() ⇒ <code>boolean</code>
-Check if object is isDifferent
+### spyo.isChanged() ⇒ <code>boolean</code>
+Check if object is changed
 
 **Kind**: instance method of [<code>Spyo</code>](#Spyo)  
 <a name="Spyo+sync"></a>
@@ -185,7 +188,7 @@ Check if two object are equals (deep check)
 <a name="Spyo.isIterable"></a>
 
 ### Spyo.isIterable(obj) ⇒ <code>boolean</code>
-Check if is an array or an object
+Check if is an array or an plain object
 
 **Kind**: static method of [<code>Spyo</code>](#Spyo)  
 <table>

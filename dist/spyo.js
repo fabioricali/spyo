@@ -1,13 +1,13 @@
-// [AIV]  Spyo Build version: 0.0.0  
+// [AIV]  Spyo Build version: 0.0.1  
  (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define("spyo", [], factory);
+		define("Spyo", [], factory);
 	else if(typeof exports === 'object')
-		exports["spyo"] = factory();
+		exports["Spyo"] = factory();
 	else
-		root["spyo"] = factory();
+		root["Spyo"] = factory();
 })(typeof self !== 'undefined' ? self : this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
