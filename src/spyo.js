@@ -25,7 +25,8 @@ class Spyo {
             autoWatch: true,
             checkMs: 50,
             refreshHandler: null,
-            exclude: null
+            exclude: null,
+            autoReset: false
         });
 
         this.opts.exclude = arrayme(this.opts.exclude);
@@ -113,18 +114,18 @@ class Spyo {
     }
 
     /**
-     * Sync object in memory
+     * Reset object in memory
      * @returns {Spyo}
      */
-    sync() {
+    reset() {
         this.objCopy = clone(this.obj);
         return this;
     }
 
     /**
      * Check if two object are equals (deep check)
-     * @param a {object}
-     * @param b {object}
+     * @param a {object} first object
+     * @param b {object} second object
      * @param exclude {Array} exclude properties from check
      * @returns {boolean}
      */

@@ -260,7 +260,7 @@ var Spyo = function () {
          */
 
     }, {
-        key: 'sync',
+        key: 'reset',
         value: function sync() {
             this.objCopy = clone(this.obj);
             return this;

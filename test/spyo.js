@@ -2,6 +2,7 @@ const Spyo = require('../');
 const be = require('bejs');
 
 describe('Spyo', function () {
+    this.timeout(2000);
 
     it('should be return type error', function (done) {
 
@@ -66,7 +67,7 @@ describe('Spyo', function () {
         });
     });
 
-    it('simulate immutable, sync, should be return false', function (done) {
+    it('simulate immutable, reset, should be return false', function (done) {
         const myObject = {
             firstName: 'Mike',
             lastName: 'Red'
@@ -78,7 +79,7 @@ describe('Spyo', function () {
 
         myNewObject.firstName = 'John';
 
-        mySpy.sync(myNewObject);
+        mySpy.reset(myNewObject);
 
         mySpy.onChange((different, me) => {
             console.log('is different:', different);
@@ -95,7 +96,7 @@ describe('Spyo', function () {
 
         function getData() {
             const myNewObject = Object.assign({}, myObject);
-            myNewObject.firstName = 'John';
+            myNewObject.firstName = 'John-' + Math.random();
             return myNewObject;
         }
 
@@ -104,9 +105,13 @@ describe('Spyo', function () {
         });
 
         mySpy.onChange((different, me) => {
+            console.log(me.obj.firstName);
             console.log('is different:', different);
-            me.unwatch();
-            be.err(done).true(different);
+            setTimeout(()=>{
+                me.unwatch();
+                be.err(done).true(different);
+            },1500);
+
         });
     });
 });

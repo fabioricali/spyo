@@ -55,7 +55,7 @@ mySpy.onChange((different) => {
         * [.unwatch()](#Spyo+unwatch) ⇒ [<code>Spyo</code>](#Spyo)
         * [.onChange(callback)](#Spyo+onChange) ⇒ [<code>Spyo</code>](#Spyo)
         * [.isChanged()](#Spyo+isChanged) ⇒ <code>boolean</code>
-        * [.sync()](#Spyo+sync) ⇒ [<code>Spyo</code>](#Spyo)
+        * [.reset()](#Spyo+sync) ⇒ [<code>Spyo</code>](#Spyo)
     * _static_
         * [.isEqual(a, b, exclude)](#Spyo.isEqual) ⇒ <code>boolean</code>
         * [.isIterable(obj)](#Spyo.isIterable) ⇒ <code>boolean</code>
@@ -155,9 +155,9 @@ Fired when object is isChanged
 Check if object is changed
 
 **Kind**: instance method of [<code>Spyo</code>](#Spyo)  
-<a name="Spyo+sync"></a>
+<a name="Spyo+reset"></a>
 
-### spyo.sync() ⇒ [<code>Spyo</code>](#Spyo)
+### spyo.reset() ⇒ [<code>Spyo</code>](#Spyo)
 Sync object in memory
 
 **Kind**: instance method of [<code>Spyo</code>](#Spyo)  
