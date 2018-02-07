@@ -193,7 +193,7 @@ var Spyo = function () {
         key: 'check',
         value: function check() {
             if (this.opts.refreshFrom) this.refresh(this.opts.refreshFrom);
-            var state = this.isDifferent();
+            var state = this.isChanged();
             if (state !== this._lastState) {
                 this._lastState = state;
                 this._onChange.call(this, state, this);
@@ -231,7 +231,7 @@ var Spyo = function () {
         }
 
         /**
-         * Fired when object is isDifferent
+         * Fired when object is isChanged
          * @param callback
          * @returns {Spyo}
          */
@@ -244,12 +244,12 @@ var Spyo = function () {
         }
 
         /**
-         * Check if object is isDifferent
+         * Check if object is isChanged
          * @returns {boolean}
          */
 
     }, {
-        key: 'isDifferent',
+        key: 'isChanged',
         value: function isDifferent() {
             return !Spyo.isEqual(this.obj, this.objCopy, this.opts.exclude);
         }

@@ -61,7 +61,7 @@ class Spyo {
     check() {
         if (this.opts.refreshFrom)
             this.refresh(this.opts.refreshFrom);
-        let state = this.isDifferent();
+        let state = this.isChanged();
         if (state !== this._lastState) {
             this._lastState = state;
             this._onChange.call(this, state, this);
@@ -91,7 +91,7 @@ class Spyo {
     }
 
     /**
-     * Fired when object is isDifferent
+     * Fired when object is isChanged
      * @param callback
      * @returns {Spyo}
      */
@@ -101,10 +101,10 @@ class Spyo {
     }
 
     /**
-     * Check if object is isDifferent
+     * Check if object is changed
      * @returns {boolean}
      */
-    isDifferent() {
+    isChanged() {
         return !Spyo.isEqual(
             this.obj,
             this.objCopy,
@@ -145,7 +145,7 @@ class Spyo {
     }
 
     /**
-     * Check if is an array or an object
+     * Check if is an array or an plain object
      * @param obj
      * @returns {boolean}
      */
