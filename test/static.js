@@ -65,6 +65,24 @@ describe('static', function () {
             be.err.false(Spyo.isEqual(a, b));
         });
 
+        it('exclude, should be return true', function () {
+            let a = {a: 2, b: 5};
+            let b = {a: 3, b: 5};
+            be.err.true(Spyo.isEqual(a, b, ['a']));
+        });
+
+        it('exclude deeper, should be return true', function () {
+            let a = {a: 3, b: 5, c: {d: [{e:3}]}};
+            let b = {a: 3, b: 5, c: {d: [{e:4}]}};
+            be.err.true(Spyo.isEqual(a, b, ['e']));
+        });
+
+        it('exclude deeper, should be return false', function () {
+            let a = {a: 3, b: 5, c: {d: [{e:3}]}};
+            let b = {a: 3, b: 4, c: {d: [{e:4}]}};
+            be.err.false(Spyo.isEqual(a, b, ['e']));
+        });
+
     });
 
     describe('isObject', function () {

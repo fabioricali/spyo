@@ -1,5 +1,6 @@
 const extend = require('defaulty');
 const clone = require('clone');
+const arrayme = require('arrayme');
 
 /**
  * @class
@@ -13,6 +14,7 @@ class Spyo {
      * @param [opts.autoWatch=true] {boolean} auto watch
      * @param [opts.checkMs=50] {number} interval in milliseconds for every check
      * @param [opts.refreshFrom=null] {Object} refresh data source every check
+     * @param [opts.exclude=null] {String|Array} exclude a property or more from check
      */
     constructor(obj, opts = {}) {
 
@@ -25,6 +27,8 @@ class Spyo {
             refreshFrom: null,
             exclude: null
         });
+
+        this.opts.exclude = arrayme(this.opts.exclude);
 
         this.obj = obj;
         this.objCopy = clone(this.obj);
@@ -51,7 +55,7 @@ class Spyo {
     }
 
     /**
-     * Check if it's different
+     * Check if it's different and call `onChange` callback
      * @returns {Spyo}
      */
     check() {
@@ -129,13 +133,11 @@ class Spyo {
             if (Object.keys(a).length !== Object.keys(b).length)
                 return false;
             for (let prop in a) {
-                if (a.hasOwnProperty(prop) && b.hasOwnProperty(prop) && exclude.indexOf(prop) === -1) {
-                    if (!Spyo.isEqual(a[prop], b[prop], exclude))
+                if (exclude.indexOf(prop) === -1)
+                    if (!(a.hasOwnProperty(prop) && b.hasOwnProperty(prop)) || !Spyo.isEqual(a[prop], b[prop], exclude)) {
                         return false;
-                } else
-                    return false;
+                    }
             }
-
             return true;
         } else {
             return Object.is(a, b);

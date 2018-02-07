@@ -1,0 +1,52 @@
+# Spyo
+Observe an object, check when it's change.
+
+<a href="https://travis-ci.org/fabioricali/spyo" target="_blank"><img src="https://travis-ci.org/fabioricali/spyo.svg?branch=master" title="Build Status"/></a>
+<a href="https://coveralls.io/github/fabioricali/spyo?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/fabioricali/spyo/badge.svg?branch=master&2" title="Coverage Status"/></a>
+<a href="https://opensource.org/licenses/MIT" target="_blank"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" title="License: MIT"/></a>
+
+## Installation
+
+### Node.js
+```
+npm install spyo --save
+```
+
+### Browser
+
+#### Local
+```html
+<script src="node_modules/spyo/dist/spyo.min.js"></script>
+```
+
+#### CDN unpkg
+```html
+<script src="https://unpkg.com/spyo/dist/spyo.min.js"></script>
+```
+
+## Example
+```javascript
+const myObject = {
+    firstName: 'Mike',
+    lastName: 'Red'
+};
+
+const mySpy = new Spyo(myObject);
+
+myObject.firstName = 'John';
+
+mySpy.onChange((different, me) => {
+    console.log('is different:', different);;
+});
+```
+
+{{>main}}
+
+## Changelog
+You can view the changelog <a target="_blank" href="https://github.com/fabioricali/spyo/blob/master/CHANGELOG.md">here</a>
+
+## License
+Spyo is open-sourced software licensed under the <a target="_blank" href="http://opensource.org/licenses/MIT">MIT license</a>
+
+## Author
+<a target="_blank" href="http://rica.li">Fabio Ricali</a>
