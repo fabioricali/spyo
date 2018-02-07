@@ -2,7 +2,6 @@
 Observe an object, check when it's change.
 
 <a href="https://travis-ci.org/fabioricali/spyo" target="_blank"><img src="https://travis-ci.org/fabioricali/spyo.svg?branch=master" title="Build Status"/></a>
-<a href="https://coveralls.io/github/fabioricali/spyo?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/fabioricali/spyo/badge.svg?branch=master&2" title="Coverage Status"/></a>
 <a href="https://opensource.org/licenses/MIT" target="_blank"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" title="License: MIT"/></a>
 
 ## Installation
