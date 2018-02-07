@@ -96,7 +96,7 @@ describe('Spyo', function () {
 
         function getData() {
             const myNewObject = Object.assign({}, myObject);
-            myNewObject.firstName = 'John-' + Math.random();
+            myNewObject.firstName = 'John';
             return myNewObject;
         }
 
@@ -107,10 +107,38 @@ describe('Spyo', function () {
         mySpy.onChange((different, me) => {
             console.log(me.obj.firstName);
             console.log('is different:', different);
-            setTimeout(()=>{
+            me.unwatch();
+            be.err(done).true(different);
+        });
+    });
+
+    it('simulate immutable and autoReset, should be return true', function (done) {
+        const myObject = {
+            firstName: 'Mike',
+            lastName: 'Red'
+        };
+
+        let i = 0;
+
+        function getData() {
+            const myNewObject = Object.assign({}, myObject);
+            myNewObject.firstName = 'John-' + Math.random();
+            return myNewObject;
+        }
+
+        const mySpy = new Spyo(myObject, {
+            autoReset: true,
+            refreshHandler: getData
+        });
+
+        mySpy.onChange((different, me) => {
+            ++i;
+            console.log(me.obj.firstName);
+            console.log('is different:', different);
+            setTimeout(() => {
                 me.unwatch();
-                be.err(done).true(different);
-            },1500);
+                be.err(done).true(i > 1);
+            }, 1500);
 
         });
     });

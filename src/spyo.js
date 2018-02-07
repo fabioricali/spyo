@@ -15,6 +15,7 @@ class Spyo {
      * @param [opts.checkMs=50] {number} interval in milliseconds for every check
      * @param [opts.refreshHandler=null] {Function} refresh data source every check
      * @param [opts.exclude=null] {String|Array} exclude a property or more from check
+     * @param [opts.autoReset=false] {boolean} reset changes detected after check
      */
     constructor(obj, opts = {}) {
 
@@ -67,6 +68,8 @@ class Spyo {
             this._lastState = state;
             this._onChange.call(this, state, this);
         }
+        if (this.opts.autoReset)
+            this.reset();
         return this;
     }
 
@@ -114,10 +117,11 @@ class Spyo {
     }
 
     /**
-     * Reset object in memory
+     * Reset changes detected
      * @returns {Spyo}
      */
     reset() {
+        this._lastState = null;
         this.objCopy = clone(this.obj);
         return this;
     }
