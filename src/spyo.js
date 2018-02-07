@@ -13,7 +13,7 @@ class Spyo {
      * @param [opts] {Object} configuration object
      * @param [opts.autoWatch=true] {boolean} auto watch
      * @param [opts.checkMs=50] {number} interval in milliseconds for every check
-     * @param [opts.refreshFrom=null] {Object} refresh data source every check
+     * @param [opts.refreshHandler=null] {Function} refresh data source every check
      * @param [opts.exclude=null] {String|Array} exclude a property or more from check
      */
     constructor(obj, opts = {}) {
@@ -24,7 +24,7 @@ class Spyo {
         this.opts = extend.copy(opts, {
             autoWatch: true,
             checkMs: 50,
-            refreshFrom: null,
+            refreshHandler: null,
             exclude: null
         });
 
@@ -51,6 +51,7 @@ class Spyo {
     refresh(obj) {
         if (!Spyo.isIterable(obj))
             throw new TypeError('An object or an array is required');
+        console.log(obj);
         this.obj = obj;
     }
 
@@ -59,8 +60,8 @@ class Spyo {
      * @returns {Spyo}
      */
     check() {
-        if (this.opts.refreshFrom)
-            this.refresh(this.opts.refreshFrom);
+        if (typeof this.opts.refreshHandler === 'function')
+            this.refresh(this.opts.refreshHandler());
         let state = this.isChanged();
         if (state !== this._lastState) {
             this._lastState = state;
