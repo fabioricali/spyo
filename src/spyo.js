@@ -95,7 +95,7 @@ class Spyo {
     }
 
     /**
-     * If check is active
+     * Detect if check is active
      * @returns {boolean}
      */
     isWatching() {
