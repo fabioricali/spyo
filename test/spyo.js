@@ -2,7 +2,7 @@ const Spyo = require('../');
 const be = require('bejs');
 
 describe('Spyo', function () {
-    this.timeout(2000);
+    this.timeout(4000);
 
     it('should be return type error', function (done) {
 
