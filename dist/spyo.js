@@ -1,4 +1,4 @@
-// [AIV]  Spyo Build version: 0.0.2  
+// [AIV]  Spyo Build version: 0.0.3  
  (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -142,6 +142,7 @@ var Spyo = function () {
      * @param [opts.checkMs=50] {number} interval in milliseconds for every check
      * @param [opts.refreshHandler=null] {Function} refresh data source every check
      * @param [opts.exclude=null] {String|Array} exclude a property or more from check
+     * @param [opts.autoReset=false] {boolean} reset changes detected after check
      */
     function Spyo(obj) {
         var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -154,7 +155,8 @@ var Spyo = function () {
             autoWatch: true,
             checkMs: 50,
             refreshHandler: null,
-            exclude: null
+            exclude: null,
+            autoReset: false
         });
 
         this.opts.exclude = arrayme(this.opts.exclude);
@@ -198,6 +200,7 @@ var Spyo = function () {
                 this._lastState = state;
                 this._onChange.call(this, state, this);
             }
+            if (this.opts.autoReset) this.reset();
             return this;
         }
 
@@ -231,6 +234,17 @@ var Spyo = function () {
         }
 
         /**
+         * Detect if check is active
+         * @returns {boolean}
+         */
+
+    }, {
+        key: 'isWatching',
+        value: function isWatching() {
+            return Boolean(this._intervalObject);
+        }
+
+        /**
          * Fired when object is isChanged
          * @param callback
          * @returns {Spyo}
@@ -255,21 +269,22 @@ var Spyo = function () {
         }
 
         /**
-         * Sync object in memory
+         * Reset changes detected
          * @returns {Spyo}
          */
 
     }, {
         key: 'reset',
-        value: function sync() {
+        value: function reset() {
+            this._lastState = null;
             this.objCopy = clone(this.obj);
             return this;
         }
 
         /**
          * Check if two object are equals (deep check)
-         * @param a {object}
-         * @param b {object}
+         * @param a {object} first object
+         * @param b {object} second object
          * @param exclude {Array} exclude properties from check
          * @returns {boolean}
          */

@@ -25,6 +25,8 @@ npm install spyo --save
 
 ## Example
 ```javascript
+const Spyo = require('spyo');
+
 const myObject = {
     firstName: 'Mike',
     lastName: 'Red'
@@ -53,6 +55,7 @@ mySpy.onChange((different) => {
         * [.check()](#Spyo+check) ⇒ [<code>Spyo</code>](#Spyo)
         * [.watch()](#Spyo+watch) ⇒ [<code>Spyo</code>](#Spyo)
         * [.unwatch()](#Spyo+unwatch) ⇒ [<code>Spyo</code>](#Spyo)
+        * [.isWatching()](#Spyo+isWatching) ⇒ <code>boolean</code>
         * [.onChange(callback)](#Spyo+onChange) ⇒ [<code>Spyo</code>](#Spyo)
         * [.isChanged()](#Spyo+isChanged) ⇒ <code>boolean</code>
         * [.reset()](#Spyo+reset) ⇒ [<code>Spyo</code>](#Spyo)
@@ -132,6 +135,12 @@ Start watching
 
 ### spyo.unwatch() ⇒ [<code>Spyo</code>](#Spyo)
 Stop watching
+
+**Kind**: instance method of [<code>Spyo</code>](#Spyo)  
+<a name="Spyo+isWatching"></a>
+
+### spyo.isWatching() ⇒ <code>boolean</code>
+Detect if check is active
 
 **Kind**: instance method of [<code>Spyo</code>](#Spyo)  
 <a name="Spyo+onChange"></a>
