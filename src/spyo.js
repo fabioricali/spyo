@@ -95,6 +95,14 @@ class Spyo {
     }
 
     /**
+     * If check is active
+     * @returns {boolean}
+     */
+    isWatching() {
+        return Boolean(this._intervalObject);
+    }
+
+    /**
      * Fired when object is isChanged
      * @param callback
      * @returns {Spyo}
