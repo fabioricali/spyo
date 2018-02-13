@@ -39,6 +39,18 @@ mySpy.onChange((different) => {
 });
 ```
 
+## Use provider function
+```javascript
+
+const mySpy = new Spyo(()=>{
+    return Math.random();
+});
+
+mySpy.onChange((different) => {
+    console.log('is different:', different);
+});
+```
+
 ## API
 
 <a name="Spyo"></a>
@@ -52,7 +64,7 @@ mySpy.onChange((different) => {
         * [.refresh(obj)](#Spyo+refresh)
         * [.check()](#Spyo+check) ⇒ [<code>Spyo</code>](#Spyo)
         * [.watch()](#Spyo+watch) ⇒ [<code>Spyo</code>](#Spyo)
-        * [.unwatch()](#Spyo+unwatch) ⇒ [<code>Spyo</code>](#Spyo)
+        * [.unwatch([reset])](#Spyo+unwatch) ⇒ [<code>Spyo</code>](#Spyo)
         * [.onChange(callback)](#Spyo+onChange) ⇒ [<code>Spyo</code>](#Spyo)
         * [.isChanged()](#Spyo+isChanged) ⇒ <code>boolean</code>
         * [.reset()](#Spyo+reset) ⇒ [<code>Spyo</code>](#Spyo)
@@ -75,7 +87,7 @@ Create instance
   </thead>
   <tbody>
 <tr>
-    <td>obj</td><td><code>Object</code></td><td></td><td><p>object that you want watch</p>
+    <td>obj</td><td><code>Object</code> | <code>function</code></td><td></td><td><p>object that you want watch</p>
 </td>
     </tr><tr>
     <td>[opts]</td><td><code>Object</code></td><td></td><td><p>configuration object</p>
@@ -87,7 +99,7 @@ Create instance
     <td>[opts.checkMs]</td><td><code>number</code></td><td><code>50</code></td><td><p>interval in milliseconds for every check</p>
 </td>
     </tr><tr>
-    <td>[opts.provider]</td><td><code>function</code></td><td><code></code></td><td><p>refresh data source every check</p>
+    <td>[opts.provider]</td><td><code>function</code></td><td><code></code></td><td><p>optional function called on every check that returns new state</p>
 </td>
     </tr><tr>
     <td>[opts.exclude]</td><td><code>String</code> | <code>Array</code></td><td><code></code></td><td><p>exclude a property or more from check</p>
@@ -130,10 +142,23 @@ Start watching
 **Kind**: instance method of [<code>Spyo</code>](#Spyo)  
 <a name="Spyo+unwatch"></a>
 
-### spyo.unwatch() ⇒ [<code>Spyo</code>](#Spyo)
+### spyo.unwatch([reset]) ⇒ [<code>Spyo</code>](#Spyo)
 Stop watching
 
 **Kind**: instance method of [<code>Spyo</code>](#Spyo)  
+<table>
+  <thead>
+    <tr>
+      <th>Param</th><th>Type</th><th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+    <td>[reset]</td><td><code>boolean</code></td><td><p>reset changes detected</p>
+</td>
+    </tr>  </tbody>
+</table>
+
 <a name="Spyo+onChange"></a>
 
 ### spyo.onChange(callback) ⇒ [<code>Spyo</code>](#Spyo)

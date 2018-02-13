@@ -41,8 +41,7 @@ mySpy.onChange((different) => {
 
 ## Use provider function
 ```javascript
-
-const mySpy = new Spyo(()=>{
+const mySpy = new Spyo(() => {
     return Math.random();
 });
 
