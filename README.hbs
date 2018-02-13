@@ -39,6 +39,18 @@ mySpy.onChange((different) => {
 });
 ```
 
+## Use provider function
+```javascript
+
+const mySpy = new Spyo(()=>{
+    return Math.random();
+});
+
+mySpy.onChange((different) => {
+    console.log('is different:', different);
+});
+```
+
 ## API
 
 {{>main}}
