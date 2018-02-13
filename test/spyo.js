@@ -31,6 +31,48 @@ describe('Spyo', function () {
         });
     });
 
+    it('detect if check is active, should be return true', function (done) {
+        const myObject = {
+            firstName: 'Mike',
+            lastName: 'Red'
+        };
+
+        const mySpy = new Spyo(myObject);
+
+        myObject.firstName = 'John';
+        mySpy.onChange((different, me) => {
+            console.log('is different:', different);
+        });
+
+        setTimeout(()=>{
+            if(mySpy.isWatching()) {
+                mySpy.unwatch();
+                done();
+            }
+        },500);
+    });
+
+    it('detect if check is active, should be return false', function (done) {
+        const myObject = {
+            firstName: 'Mike',
+            lastName: 'Red'
+        };
+
+        const mySpy = new Spyo(myObject);
+
+        myObject.firstName = 'John';
+        mySpy.onChange((different, me) => {
+            me.unwatch();
+            console.log('is different:', different);
+        });
+
+        setTimeout(()=>{
+            if(!mySpy.isWatching()) {
+                done();
+            }
+        },500);
+    });
+
     it('no changes, should be return false', function (done) {
         const myObject = {
             firstName: 'Mike',
