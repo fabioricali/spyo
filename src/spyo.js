@@ -91,7 +91,7 @@ class Spyo {
 
     /**
      * Stop watching
-     * @param reset {boolean} reset changes detected
+     * @param [reset] {boolean} reset changes detected
      * @returns {Spyo}
      */
     unwatch(reset) {
