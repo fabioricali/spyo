@@ -2,7 +2,7 @@ const Spyo = require('../');
 const be = require('bejs');
 
 describe('Spyo', function () {
-    this.timeout(2000);
+    this.timeout(4000);
 
     it('should be return type error', function (done) {
 
@@ -103,6 +103,32 @@ describe('Spyo', function () {
         const mySpy = new Spyo(myObject, {
             provider: getData
         });
+
+        mySpy.onChange((different, me) => {
+            console.log(me.obj.firstName);
+            console.log('is different:', different);
+            me.unwatch();
+            be.err(done).true(different);
+        });
+    });
+
+    it('simulate provider function passed in obj param, should be return true', function (done) {
+        const myObject = {
+            firstName: 'Mike',
+            lastName: 'Red'
+        };
+
+        let called = false;
+
+        function getData() {
+            const myNewObject = Object.assign({}, myObject);
+            if (!called)
+            myNewObject.firstName = 'John';
+            called = true;
+            return myNewObject;
+        }
+
+        const mySpy = new Spyo(getData);
 
         mySpy.onChange((different, me) => {
             console.log(me.obj.firstName);

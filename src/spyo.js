@@ -20,7 +20,7 @@ class Spyo {
     constructor(obj, opts = {}) {
 
         if (typeof obj === 'function') {
-            this.opts.provider = obj;
+            opts.provider = obj;
             obj = obj();
         }
 
