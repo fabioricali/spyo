@@ -1,4 +1,4 @@
-// [AIV]  Spyo Build version: 0.0.2  
+// [AIV]  Spyo Build version: 1.0.0  
  (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -136,25 +136,32 @@ var Spyo = function () {
 
     /**
      * Create instance
-     * @param obj {Object} object that you want watch
+     * @param obj {Object|Function} object that you want watch
      * @param [opts] {Object} configuration object
      * @param [opts.autoWatch=true] {boolean} auto watch
      * @param [opts.checkMs=50] {number} interval in milliseconds for every check
-     * @param [opts.provider=null] {Function} refresh data source every check
+     * @param [opts.provider=null] {Function} optional function called on every check that returns new state
      * @param [opts.exclude=null] {String|Array} exclude a property or more from check
+     * @param [opts.autoReset=false] {boolean} reset changes detected after check
      */
     function Spyo(obj) {
         var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
         _classCallCheck(this, Spyo);
 
-        if (!Spyo.isIterable(obj)) throw new TypeError('An object or an array is required');
+        if (typeof obj === 'function') {
+            opts.provider = obj;
+            obj = obj();
+        }
+
+        if (!Spyo.isIterable(obj)) throw new TypeError('An object, array or provider function is required');
 
         this.opts = extend.copy(opts, {
             autoWatch: true,
             checkMs: 50,
             provider: null,
-            exclude: null
+            exclude: null,
+            autoReset: false
         });
 
         this.opts.exclude = arrayme(this.opts.exclude);
@@ -198,6 +205,7 @@ var Spyo = function () {
                 this._lastState = state;
                 this._onChange.call(this, state, this);
             }
+            if (this.opts.autoReset) this.reset();
             return this;
         }
 
@@ -219,14 +227,16 @@ var Spyo = function () {
 
         /**
          * Stop watching
+         * @param [reset] {boolean} reset changes detected
          * @returns {Spyo}
          */
 
     }, {
         key: 'unwatch',
-        value: function unwatch() {
+        value: function unwatch(reset) {
             clearInterval(this._intervalObject);
             this._intervalObject = null;
+            if (reset) this.reset();
             return this;
         }
 
@@ -255,21 +265,22 @@ var Spyo = function () {
         }
 
         /**
-         * Sync object in memory
+         * Reset changes detected
          * @returns {Spyo}
          */
 
     }, {
         key: 'reset',
-        value: function sync() {
+        value: function reset() {
+            this._lastState = null;
             this.objCopy = clone(this.obj);
             return this;
         }
 
         /**
          * Check if two object are equals (deep check)
-         * @param a {object}
-         * @param b {object}
+         * @param a {object} first object
+         * @param b {object} second object
          * @param exclude {Array} exclude properties from check
          * @returns {boolean}
          */

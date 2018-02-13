@@ -1,6 +1,6 @@
 {
     "name": "spyo",
-    "version": "0.0.2",
+    "version": "1.0.0",
     "description": "Observe object",
     "main": "index.js",
     "scripts": {
