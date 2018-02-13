@@ -25,7 +25,7 @@ class Spyo {
         }
 
         if (!Spyo.isIterable(obj))
-            throw new TypeError('An object or an array is required');
+            throw new TypeError('An object, array or provider function is required');
 
         this.opts = extend.copy(opts, {
             autoWatch: true,
