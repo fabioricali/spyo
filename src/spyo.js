@@ -9,7 +9,7 @@ class Spyo {
 
     /**
      * Create instance
-     * @param obj {Object} object that you want watch
+     * @param obj {Object|Function} object that you want watch
      * @param [opts] {Object} configuration object
      * @param [opts.autoWatch=true] {boolean} auto watch
      * @param [opts.checkMs=50] {number} interval in milliseconds for every check
@@ -18,6 +18,11 @@ class Spyo {
      * @param [opts.autoReset=false] {boolean} reset changes detected after check
      */
     constructor(obj, opts = {}) {
+
+        if (typeof obj === 'function') {
+            this.opts.provider = obj;
+            obj = obj();
+        }
 
         if (!Spyo.isIterable(obj))
             throw new TypeError('An object or an array is required');
