@@ -140,7 +140,7 @@ var Spyo = function () {
      * @param [opts] {Object} configuration object
      * @param [opts.autoWatch=true] {boolean} auto watch
      * @param [opts.checkMs=50] {number} interval in milliseconds for every check
-     * @param [opts.refreshHandler=null] {Function} refresh data source every check
+     * @param [opts.provider=null] {Function} refresh data source every check
      * @param [opts.exclude=null] {String|Array} exclude a property or more from check
      */
     function Spyo(obj) {
@@ -153,7 +153,7 @@ var Spyo = function () {
         this.opts = extend.copy(opts, {
             autoWatch: true,
             checkMs: 50,
-            refreshHandler: null,
+            provider: null,
             exclude: null
         });
 
@@ -192,7 +192,7 @@ var Spyo = function () {
     }, {
         key: 'check',
         value: function check() {
-            if (typeof this.opts.refreshHandler === 'function') this.refresh(this.opts.refreshHandler());
+            if (typeof this.opts.provider === 'function') this.refresh(this.opts.provider());
             var state = this.isChanged();
             if (state !== this._lastState) {
                 this._lastState = state;

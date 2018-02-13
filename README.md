@@ -87,7 +87,7 @@ Create instance
     <td>[opts.checkMs]</td><td><code>number</code></td><td><code>50</code></td><td><p>interval in milliseconds for every check</p>
 </td>
     </tr><tr>
-    <td>[opts.refreshHandler]</td><td><code>function</code></td><td><code></code></td><td><p>refresh data source every check</p>
+    <td>[opts.provider]</td><td><code>function</code></td><td><code></code></td><td><p>refresh data source every check</p>
 </td>
     </tr><tr>
     <td>[opts.exclude]</td><td><code>String</code> | <code>Array</code></td><td><code></code></td><td><p>exclude a property or more from check</p>

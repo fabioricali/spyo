@@ -13,7 +13,7 @@ class Spyo {
      * @param [opts] {Object} configuration object
      * @param [opts.autoWatch=true] {boolean} auto watch
      * @param [opts.checkMs=50] {number} interval in milliseconds for every check
-     * @param [opts.refreshHandler=null] {Function} refresh data source every check
+     * @param [opts.provider=null] {Function} optional function called on every check that returns new state
      * @param [opts.exclude=null] {String|Array} exclude a property or more from check
      * @param [opts.autoReset=false] {boolean} reset changes detected after check
      */
@@ -25,7 +25,7 @@ class Spyo {
         this.opts = extend.copy(opts, {
             autoWatch: true,
             checkMs: 50,
-            refreshHandler: null,
+            provider: null,
             exclude: null,
             autoReset: false
         });
@@ -61,8 +61,8 @@ class Spyo {
      * @returns {Spyo}
      */
     check() {
-        if (typeof this.opts.refreshHandler === 'function')
-            this.refresh(this.opts.refreshHandler());
+        if (typeof this.opts.provider === 'function')
+            this.refresh(this.opts.provider());
         let state = this.isChanged();
         if (state !== this._lastState) {
             this._lastState = state;
@@ -86,11 +86,14 @@ class Spyo {
 
     /**
      * Stop watching
+     * @param reset {boolean} reset changes detected
      * @returns {Spyo}
      */
-    unwatch() {
+    unwatch(reset) {
         clearInterval(this._intervalObject);
         this._intervalObject = null;
+        if (reset)
+            this.reset();
         return this;
     }
 

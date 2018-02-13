@@ -101,7 +101,7 @@ describe('Spyo', function () {
         }
 
         const mySpy = new Spyo(myObject, {
-            refreshHandler: getData
+            provider: getData
         });
 
         mySpy.onChange((different, me) => {
@@ -128,7 +128,7 @@ describe('Spyo', function () {
 
         const mySpy = new Spyo(myObject, {
             autoReset: true,
-            refreshHandler: getData
+            provider: getData
         });
 
         mySpy.onChange((different, me) => {
