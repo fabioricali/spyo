@@ -1,4 +1,4 @@
-// [AIV]  Spyo Build version: 1.0.0  
+// [AIV]  Spyo Build version: 1.0.1  
  (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -238,6 +238,17 @@ var Spyo = function () {
             this._intervalObject = null;
             if (reset) this.reset();
             return this;
+        }
+
+        /**
+         * Detect if check is active
+         * @returns {boolean}
+         */
+
+    }, {
+        key: 'isWatching',
+        value: function isWatching() {
+            return Boolean(this._intervalObject);
         }
 
         /**
